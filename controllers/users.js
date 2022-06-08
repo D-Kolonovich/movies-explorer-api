@@ -7,30 +7,6 @@ const ConflictError = require('../errors/ConflictError');
 const ValidationError = require('../errors/ValidationError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 
-// module.exports.findUsers = (req, res, next) => {
-//   User.find({})
-//     .then((user) => res.send(user))
-//     .catch((err) => next(err)); // res.status(500).send({ message: 'Произошла ошибка' })
-// };
-
-// module.exports.findUserById = (req, res, next) => {
-//   User.findById(req.params.userId)
-//     .then((user) => {
-//       if (!user) {
-//         throw new NotFoundError('Пользователь с указанным _id не найден'); // res.status(404).send
-//       } else {
-//         res.send(user);
-//       }
-//     })
-//     .catch((err) => {
-//       if (err.name === 'CastError') {
-//         next(new NotFoundError('Переданы некорректные данные при поиске')); // res.status(400).send
-//       } else {
-//         next(err); // res.status(500).send({ message: 'Произошла ошибка' })
-//       }
-//     });
-// };
-
 module.exports.getCurrentUser = (req, res, next) => {
   const { _id } = req.user;
   User.findById(_id)

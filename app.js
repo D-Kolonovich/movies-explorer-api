@@ -4,37 +4,21 @@ const mongoose = require('mongoose');
 
 const { errors, celebrate, Joi } = require('celebrate');
 const cors = require('cors');
-// const validator = require('validator');
 const errorHandler = require('./errors/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
 
+const { NODE_ENV, DB_URL } = process.env;
 const { PORT = 3001 } = process.env;
+
 app.use(express.json());
-
-// const UnauthorizedError = require('./errors/UnauthorizedError');
-
-// const validateURL = (value) => {
-//   if (!validator.isURL(value, { require_protocol: true })) {
-//     throw new UnauthorizedError('Неправильный формат ссылки');
-//   }
-//   return value;
-// };
-
-// app.get('/crash-test', () => {
-//   setTimeout(() => {
-//     throw new Error('Сервер сейчас упадёт');
-//   }, 0);
-// });
 
 const { login, createUser } = require('./controllers/users');
 const NotFoundError = require('./errors/NotFoundError');
 const auth = require('./middlewares/auth');
 
-// NODE_ENV === 'production' ? DB_URL :
-
-mongoose.connect('mongodb://localhost:27017/moviesdb', {
+mongoose.connect(NODE_ENV === 'production' ? DB_URL : 'mongodb://localhost:27017/moviesdb', {
   useUnifiedTopology: true,
   useNewUrlParser: true,
 });
