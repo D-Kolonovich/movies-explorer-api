@@ -17,7 +17,7 @@ app.use(express.json());
 const NotFoundError = require('./errors/NotFoundError');
 const auth = require('./middlewares/auth');
 
-mongoose.connect(NODE_ENV === 'production' ? DB_URL : 'mongodb://localhost:27017/moviesdb');
+mongoose.connect(NODE_ENV === 'production' ? DB_URL : 'mongodb://localhost:27017/moviesdb-test');
 
 app.use(requestLogger); // подключаем логгер запросов
 
