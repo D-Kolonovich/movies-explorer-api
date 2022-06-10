@@ -12,7 +12,7 @@ module.exports.getCurrentUser = (req, res, next) => {
   User.findById(_id)
     .then((user) => {
       if (!user) {
-        next(new NotFoundError('Пользователь не найден'));
+        return next(new NotFoundError('Пользователь не найден'));
       }
       return res.send(user);
     })
@@ -29,17 +29,21 @@ module.exports.createUser = (req, res, next) => {
     email,
     password: hash,
   });
-  bcrypt
-    .hash(password, 10)
+  User.findOne({ email })
+    .then((user) => {
+      if (user) {
+        throw new ConflictError('Данный email уже используется');
+      }
+      return bcrypt.hash(password, 10);
+    })
+
     .then((hash) => createUser(hash))
     .then((user) => User.findOne({ _id: user._id }))
     .then((user) => {
       res.send(user);
     })
     .catch((err) => {
-      if (err.code === 11000) {
-        next(new ConflictError('Данный email уже используется'));
-      } else if (err.name === 'ValidationError') {
+      if (err.name === 'ValidationError') {
         next(new ValidationError('Переданы некорректные данные при создании пользователя.')); // res.status(400).send
       } else {
         next(err); // res.status(500).send({ message: 'Произошла ошибка' })
@@ -90,6 +94,6 @@ module.exports.login = (req, res, next) => {
     })
     .catch(() => {
       // ошибка аутентификации
-      next(new UnauthorizedError('невозможно авторизоваться'));
+      next(new UnauthorizedError('Неправильная почта или пароль'));
     });
 };

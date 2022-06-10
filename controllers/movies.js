@@ -10,11 +10,34 @@ module.exports.findMovies = (req, res, next) => {
 };
 
 module.exports.createMovie = (req, res, next) => {
-  const { country, director, duration, year, description, image,
-    trailerLink, thumbnail, movieId, nameRU, nameEN, } = req.body;
+  const {
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailerLink,
+    thumbnail,
+    movieId,
+    nameRU,
+    nameEN,
+  } = req.body;
   const owner = req.user._id;
-  Movie.create({ country, director, duration, year, description, image,
-    trailerLink, thumbnail, movieId, nameRU, nameEN, owner })
+  Movie.create({
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailerLink,
+    thumbnail,
+    movieId,
+    nameRU,
+    nameEN,
+    owner,
+  })
     .then((movie) => {
       if (!movie) {
         throw new ValidationError('Переданы некорректные данные'); // res.status(400).send
