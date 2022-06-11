@@ -22,7 +22,7 @@ mongoose.connect(NODE_ENV === 'production' ? DB_URL : 'mongodb://localhost:27017
 app.use(requestLogger); // подключаем логгер запросов
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://api.movies.kolonovich.nomoreparties.sbs'], // https будет переделан
+  origin: ['http://localhost:3000'], // https будет переделан
   credentials: true,
 }));
 
