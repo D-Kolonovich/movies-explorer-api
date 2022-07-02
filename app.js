@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const { errors } = require('celebrate');
-const cors = require('./middlewares/cors');
+const { cors } = require('./middlewares/cors');
 const errorHandler = require('./errors/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
