@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const { errors } = require('celebrate');
-const cors = require('cors');
+const cors = require('./middlewares/cors');
 const errorHandler = require('./errors/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
@@ -19,13 +19,14 @@ const auth = require('./middlewares/auth');
 
 mongoose.connect(NODE_ENV === 'production' ? DB_URL : 'mongodb://localhost:27017/moviesdb-test');
 
+app.use(cors);
+
 app.use(requestLogger); // подключаем логгер запросов
 
-app.use(cors({
-  origin: ['http://localhost:3000'], // https будет переделан
-  credentials: true,
-}));
-
+// app.use(cors({
+//   origin: '*', // https будет переделан
+//   credentials: true,
+// }));
 require('./routes/auth')(app);
 
 app.use(auth);
