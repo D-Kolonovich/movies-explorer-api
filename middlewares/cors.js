@@ -1,6 +1,6 @@
 const allowedCors = [
-  'https://movies.kolonovich.nomoreparties.sbs',
-  'http://movies.kolonovich.nomoreparties.sbs',
+  'https://kolonovich.com',
+  'http://kolonovich.com',
   'http://localhost:3000',
 ];
 
